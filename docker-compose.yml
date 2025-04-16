@@ -1,0 +1,82 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development  # Or production, based on your environment
+      PORT: 3001
+      # JWT
+      ACCESS_TOKEN_SECRET: 'my-secure-access-token'
+      REFRESH_TOKEN_SECRET: 'my-secure-refresh-token'
+
+      ACCESS_TOKEN_EXPIRES_IN: '15m'
+      REFRESH_TOKEN_EXPIRES_IN: '7d'
+
+      #ACCESS_TOKEN_EXPIRES_IN: '5s'
+      #REFRESH_TOKEN_EXPIRES_IN: '10s'
+
+      DEV_AUTH: 'AUTH'
+
+      # Database configuration for MariaDB
+      #DB_HOST: localhost
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: my-secret-pw
+      DB_DATABASE: test
+
+      #Email
+      #SMTP_HOST: your.smtp.server
+      #SMTP_PORT: 25
+      #SMTP_USER: your@email.com
+      #SMTP_PASSWORD: yourpassword
+
+      SMTP_HOST: smtp.example-mail.com
+      SMTP_PORT: 587
+      SMTP_USER: mail@example.com
+      SMTP_PASSWORD: 'xxxx xxxx xxxx xxxx'
+      #    depends_on:
+      #      mariadb:
+      #        condition: service_healthy  # Wait for the database to be healthy
+    networks:
+      - app-network
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server  # Optionally ensure server is started first
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw  # Root password
+      MYSQL_DATABASE: test  # Database name
+      # MYSQL_USER: user  # Uncomment to create a non-root user
+      # MYSQL_PASSWORD: user-password  # Uncomment to set the non-root
+#    healthcheck:
+#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#      timeout: 20s
+#      retries: 10
+#      interval: 10s
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:  # Custom network for inter-service communication
+
+volumes:
+  mariadb_data:

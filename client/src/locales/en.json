@@ -1,0 +1,20 @@
+{
+  "auth.mail": "Mail",
+  "auth.password": "Password",
+  "auth.rememberMe": "Remember me",
+  "auth.signIn": "Sign in",
+  "app.greeting": "Hello, World!",
+  "app.header": "Welcome to My App",
+  "home.welcome": "Welcome to the Home Page!",
+  "home.darkMode": "Switch to Dark Mode",
+  "home.lightMode": "Switch to Light Mode",
+
+  "referencedata.subject.label": "Subject",
+  "referencedata.jobtitle.label": "Job Title",
+  "referencedata.industry.label": "Industry",
+  "referencedata.update.subject": "Update Subject",
+  "referencedata.update.jobtitle": "Update Job Title",
+  "referencedata.update.industry": "Update Industry",
+  "edit": "Edit",
+  "field.required": "Required field"
+}

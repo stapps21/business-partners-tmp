@@ -1,0 +1,7 @@
+.git
+.gitignore
+.prettierrc
+**/node_modules
+**/dist
+node_modules
+
